@@ -46,7 +46,7 @@ for log in logs_1:
             break
 
 print(f"User login attempts report:")
-for user, stats in attempts.items():
+for user, status in attempts.items():
     print(f"User: {user} \n"
-          f"Success: {stats['SUCCESS']} - Fail: {stats['FAIL']} \n"
+          f"Success: {status["SUCCESS"]} - Fail: {status["FAIL"]} \n"
           "----------")
