@@ -1,3 +1,5 @@
+# This script helps create an overview analysis of the results of an email marketing campaign
+
 campaign_data = [
     ["alice@gmail.com", True, False],
     ["bob@yahoo.com", True, True],
@@ -29,14 +31,21 @@ for record in campaign_data:
                     clicked_count += 1
                 
                 domain = email.strip().split("@")[1] #Get email domain of opened emails
+                #Counting emails opened by domain
                 if domain in domain_count:
                     domain_count[domain] = domain_count.get(domain, 0) + 1
                 else:
                     domain_count[domain] = 1
                 
-open_rate = f"{opened_count/total_sent:.0%}"
-click_rate = f"{clicked_count/total_sent:.0%}"
-popular_domain = max(domain_count, key=domain_count.get)
+#Percentage of emails opened out of total emails sent
+open_rate = f"{opened_count/total_sent:.0%}" 
+
+#Percentage of emails that recipients click on the content out of total number of emails sent
+click_rate = f"{clicked_count/total_sent:.0%}" 
+
+#Find out which domain has the most opened emails out of the total opened emails and its open rate
+popular_domain = max(domain_count, key=domain_count.get) 
+highest_open_rate = f"{domain_count[popular_domain]/opened_count:.0%}"
 
 print(f"Email marketing campaign report")
 print(f"Total email sent: {total_sent} \n"
@@ -44,4 +53,4 @@ print(f"Total email sent: {total_sent} \n"
       f"Open rate: {open_rate} \n"
       f"Total link clicked: {clicked_count} \n"
       f"Click rate: {click_rate} \n"
-      f"Most opened email by domain: {popular_domain} by {domain_count[domain]} times")
+      f"Emails from {popular_domain} had the highest open rate, making up {highest_open_rate} of all opened emails.")
