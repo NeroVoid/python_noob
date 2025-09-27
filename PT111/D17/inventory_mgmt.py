@@ -82,7 +82,7 @@ def inventory_management():
 #Displays the entire list of products in the inventory along with their in-stock quantity.
 
 def display_inventory():
-    print("\n Current Inventory:")
+    print("--- Current Inventory ---")
     if not inventory:
         print("Inventory is empty.")
         return
