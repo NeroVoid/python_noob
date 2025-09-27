@@ -5,8 +5,9 @@ inventory = {
     }
 
 # Warehouse Inventory Management System
-
 def inventory_management():
+
+    # Main loop for user interaction.
     while True:
         print("\nInventory Management System \n"
         "1. Display Inventory \n"
@@ -17,23 +18,35 @@ def inventory_management():
         "6. Exit"
         )
         
+        # Get user selection.
         selection = input("Select a task (1-6): ")
         
+        # Display current inventory.
         if selection == '1':
             display_inventory()
 
+        # Sell a product.
         elif selection == '2':
             product_name = input("Enter product name to sell: ").title()
+            
+            # Check if product exists and is in stock.
             if product_name not in inventory:
                 print(f"{product_name} does not exist.")
                 continue
+
+            # Check if product is out of stock.
             if check_out_of_stock(product_name):
                 continue
+
+            # Sell product with valid input for sales volume.
             while True:
-                #Ensure valid input for sales volume or return to main menu
+
+                # Ensure valid input for sales volume or return to main menu.
                 sales_volume = input("Enter quantity to sell (or type 'back' to return to main menu): ")
+
                 if sales_volume.lower() in ['back', 'b']:
                     break
+
                 try:
                     if int(sales_volume) > 0:
                         sell_product(product_name, sales_volume)
@@ -42,22 +55,29 @@ def inventory_management():
                     pass
                 print("Invalid input. Enter a positive number for quantity or 'back' to return to main menu.")
 
+        # Add a new product to the inventory or update stock of existing product
         elif selection == '3':
             product_name = input("Enter product name to add: ").title()
 
+            # Check if product already exists. If so, offer to update stock instead.
             if product_name in inventory:
                 print(f"{product_name} already exists in inventory. Current stock: {inventory[product_name]} units.")
+
                 print("Do you want to update the stock instead? (yes/no)")
+
                 if input().lower() in ['yes', 'y']:
                     add_stock(product_name)
                 else:
                     print("No changes made to inventory.")
             
+            # Add new product with valid input for initial stock quantity
             else:
                 while True:
                     initial_quantity = input("Enter initial stock quantity (or type 'back' to return to main menu): ")
+
                     if initial_quantity.lower() in ['back', 'b']:
                         break
+                    
                     try:
                         if int(initial_quantity) >= 0:
                             add_product(product_name, initial_quantity)
@@ -66,42 +86,54 @@ def inventory_management():
                         pass
                     print("Invalid input. Enter a positive number for quantity or 'back' to return to main menu.")
         
+        # Remove out-of-stock product(s) from the inventory.
         elif selection == '4':
             remove_out_of_stock()   
         
+        # Display product(s) with highest stock quantity.
         elif selection == '5':
             product_with_highest_stock()
         
+        # Exit the program
         elif selection == '6':
             print("Exiting Inventory Management System.")
             break
         
+        # Handle invalid selection
         else:
             print("Invalid selection. Please choose a valid option (1-6).")
 
-#Displays the entire list of products in the inventory along with their in-stock quantity.
-
+# Function: Displays the entire list of products in the inventory along with their in-stock quantity.
 def display_inventory():
     print("--- Current Inventory ---")
+
+    # Check if inventory is empty
     if not inventory:
         print("Inventory is empty.")
         return
+    
+    # Check if all products are out of stock
+    if all(quantity == 0 for quantity in inventory.values()):
+        print("All products are out of stock.")
+        return
+    
+    # Display inventory sorted by product name
     else:
         for product_name, current_quantity in sorted(inventory.items()):
             print(f"{product_name}: {current_quantity} units")
 
-#Check whether a product is out of stock and displaying a message if it is.
-
+# Function: Check whether a product is out of stock and displaying a message if it is.
 def check_out_of_stock(product_name):
     if inventory.get(product_name, 0) == 0:
         print(f"{product_name} is out of stock.")
         return True
     return False
 
-#Sells a specified quantity of a product and updating the inventory accordingly.
-
+# Function: Sells a specified quantity of a product and updating the inventory accordingly.
 def sell_product(product_name, sales_volume):
     sales_volume = int(sales_volume)
+
+    # Check if product exists and has sufficient stock.
     if product_name in inventory:
         if sales_volume <= inventory[product_name]:
             inventory[product_name] -= sales_volume
@@ -109,10 +141,11 @@ def sell_product(product_name, sales_volume):
         else:
             print(f"Insufficient stock for {product_name}. Available: {inventory[product_name]} units.")
 
-#Adds a new product to the inventory with an initial stock quantity.
-
+# Function: Adds a new product to the inventory with an initial stock quantity.
 def add_product(product_name, initial_quantity):
     initial_quantity = int(initial_quantity)
+
+    # Check if product already exists.
     if product_name not in inventory:
         if initial_quantity >= 0:
             inventory[product_name] = initial_quantity
@@ -120,14 +153,17 @@ def add_product(product_name, initial_quantity):
         else:
             print("Initial quantity must be a positive number.")
 
-#Adds stock to an existing product.
-
+# Function: Adds stock to an existing product.
 def add_stock(product_name):
+
+    # Check if product exists.
     if product_name in inventory:
         while True:
             added_quantity = input(f"Enter quantity to add to {product_name} (or type 'back' to return to main menu): ")
             if added_quantity.lower() in ['back', 'b']:
                 break
+
+            # Ensure valid input for added quantity or return to main menu
             try:
                 if int(added_quantity) > 0:
                     inventory[product_name] += int(added_quantity)
@@ -137,11 +173,11 @@ def add_stock(product_name):
                 pass
             print("Invalid input. Please enter a positive number for quantity of 'back' to return to main menu.") 
 
-#Removes all products that are out of stock from the inventory.
-
+# Function: Removes all products that are out of stock from the inventory.
 def remove_out_of_stock():
     out_of_stock = [product for product, quantity in inventory.items() if quantity == 0]
 
+    # Remove out-of-stock products if any exist.
     if out_of_stock:
         for product in out_of_stock:
             del inventory[product]
@@ -149,21 +185,27 @@ def remove_out_of_stock():
     else:
         print("No out-of-stock products to remove.")
 
-#Identifies and displays the product with the highest stock quantity.
-
+# Function: Identifies and displays the product with the highest stock quantity.
 def product_with_highest_stock():
+
+    # Check if inventory is empty.
     if not inventory:
         print("Inventory is empty.")
         return
-
+    
+    # Find the maximum stock quantity.
     max_quantity = max(inventory.values())
 
+    # Check if all products are out of stock
     if max_quantity == 0:
         print("All products are out of stock.")
         return
+    
+    # Identify product(s) with the highest stock quantity.
     else:
         top_products = [product_name for product_name, current_quantity in inventory.items() if current_quantity == max_quantity]
         
+        # Display product(s) with the highest stock quantity.
         if len(top_products) > 1:
             print(f"Products with highest stock: {', '.join(top_products)} ({max_quantity} units each)")
         else:
