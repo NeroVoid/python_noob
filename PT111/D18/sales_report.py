@@ -23,7 +23,7 @@ for product, revenue in revenue_by_product.items():
     print(f"{product}: ${revenue}")
 
 # Write report to CSV file
-with open("sales_report.csv", "w", newline="") as report_file:
+with open("report.csv", "w", newline="") as report_file:
     writer = csv.writer(report_file)
     writer.writerow(["Product", "Revenue"])
     for product, revenue in revenue_by_product.items():
