@@ -1,9 +1,3 @@
-'''
-Viết hàm analyze_numbers(*args) trả về:
-Tổng các số,
-Giá trị lớn nhất,
-Giá trị nhỏ nhất.
-'''
 def analyze_numbers(*args):
     if not args:
         return (0, None, None)
