@@ -20,21 +20,15 @@ Danh sách được lưu trữ bằng list chứa dictionary.
 Viết menu chương trình với các chức năng:
 
 Thêm sinh viên
-
 Cập nhật thông tin sinh viên theo id
-
 Xoá sinh viên theo id
-
 Tìm kiếm sinh viên theo tên
-
 Hiển thị toàn bộ danh sách sinh viên
-
 Lưu danh sách vào file students.csv và có thể đọc lại dữ liệu từ file.
 
 Xử lý ngoại lệ khi:
 
 Nhập trùng id.
-
 Xoá hoặc sửa sinh viên không tồn tại.
 
 Gợi ý data mẫu (students.csv)

@@ -8,11 +8,8 @@ Bạn được cung cấp một file article.txt chứa một đoạn văn bản
 ## Yêu cầu
 
 Đọc nội dung từ file `article.txt`.
-
 Thống kê số dòng, số từ trong văn bản.
-
 Đếm số lần xuất hiện của từng từ (dùng dictionary).
-
 Ghi kết quả thống kê ra file report.txt theo định dạng:
 
 ```bash
