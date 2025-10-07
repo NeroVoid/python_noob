@@ -1,0 +1,4 @@
+Food
+Transportation
+Shopping
+Entertainment
